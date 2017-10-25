@@ -1,5 +1,6 @@
 package sample;
 
+import Server.IListener;
 import javafx.fxml.FXML;
 
 import java.rmi.RemoteException;
@@ -33,6 +34,7 @@ public class Effectenbeurs extends UnicastRemoteObject implements IEffectenbeurs
 
 
         }
+
     }
 
     @Override
@@ -40,4 +42,13 @@ public class Effectenbeurs extends UnicastRemoteObject implements IEffectenbeurs
         return fonds;
     }
 
+    @Override
+    public void addListener(IListener listener) throws RemoteException {
+
+    }
+
+    @Override
+    public void removeListener(IListener listener) throws RemoteException {
+
+    }
 }

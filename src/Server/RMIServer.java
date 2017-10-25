@@ -12,17 +12,22 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.List;
 
 /**
  * Example of RMI using Registry
  *
  * @author Nico Kuijpers
  */
-public class RMIServer {
+public class RMIServer implements IRemotePublisher {
+
+    // List of Listeners
+    private List<IListener> listeners = new ArrayList<>();
     // Set port number
     private int portNumber = 1099;
 
@@ -112,5 +117,15 @@ public class RMIServer {
 
         // Create server
         RMIServer server = new RMIServer();
+    }
+
+    @Override
+    public void addListener(IListener listener) throws RemoteException {
+        listeners.add(listener);
+    }
+
+    @Override
+    public void removeListener(IListener listener) throws RemoteException {
+        listeners.remove(listener);
     }
 }

@@ -1,5 +1,7 @@
 package sample;
 
+import Server.IListener;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -28,18 +30,11 @@ public class BannerController {
             e.printStackTrace();
         }
 
-        // Start polling timer: update banner every two seconds
-        pollingTimer = new Timer();
-        pollingTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    Update();
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, 0 , 2000);
+        try{
+            effectenbeurs.addListener(new Listener(this));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     private Registry locateRegistry(String ipAdress, int portNumber)
@@ -53,6 +48,9 @@ public class BannerController {
         System.out.println("Client: RemoteException: " + ex.getMessage());
             return null;
         }
+    }
+    public void setKoersen(String koersen) {
+        banner.setKoersen(koersen);
     }
     public void Update() throws RemoteException {
         List<IFonds> fonds = effectenbeurs.getKoersen();
